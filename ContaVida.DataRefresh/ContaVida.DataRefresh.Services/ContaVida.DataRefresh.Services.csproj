@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ContaVida.DataRefresh.DataAccess\ContaVida.DataRefresh.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

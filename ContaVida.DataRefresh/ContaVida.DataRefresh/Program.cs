@@ -1,4 +1,8 @@
-﻿using ContaVida.DataRefresh.Services;
+﻿
+using ContaVida.DataRefresh.DataAccess.DataAccess.ContaVidaMirrorTarget;
+using ContaVida.DataRefresh.DataAccess.DataAccess.ContaVidaProductionSource;
+using ContaVida.DataRefresh.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,13 +17,13 @@ var host = Host.CreateDefaultBuilder(args)
             logging.AddConsole();
         });
 
-        //services.AddDbContext<SourceDbContext>(options =>
-        //    options.UseSqlServer(
-        //        context.Configuration.GetConnectionString("SourceDatabase")));
+        services.AddDbContext<ContaVidaDbContextSource>(options =>
+            options.UseSqlServer(
+                context.Configuration.GetConnectionString("SourceDatabase")));
 
-        //services.AddDbContext<TargetDbContext>(options =>
-        //    options.UseSqlServer(
-        //        context.Configuration.GetConnectionString("TargetDatabase")));
+        services.AddDbContext<ContaVidaDbContextTarget>(options =>
+            options.UseSqlServer(
+                context.Configuration.GetConnectionString("TargetDatabase")));
 
         services.AddTransient<IDataRefreshService, DataRefreshService>();
     })
