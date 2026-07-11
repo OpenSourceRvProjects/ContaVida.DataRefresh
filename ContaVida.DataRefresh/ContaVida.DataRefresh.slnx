@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ContaVida.DataRefresh.DataAccess/ContaVida.DataRefresh.DataAccess.csproj" />
+  <Project Path="ContaVida.DataRefresh.Services/ContaVida.DataRefresh.Services.csproj" />
+  <Project Path="ContaVida.DataRefresh/ContaVida.DataRefresh.csproj" />
+</Solution>
