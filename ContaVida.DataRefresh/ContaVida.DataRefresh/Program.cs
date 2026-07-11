@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
+﻿using ContaVida.DataRefresh.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ContaVida.DataRefresh.Services;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
@@ -25,9 +26,17 @@ var host = Host.CreateDefaultBuilder(args)
     .Build();
 
 var logger = host.Services.GetRequiredService<ILogger<Program>>();
+var environment = host.Services.GetRequiredService<IHostEnvironment>();
+var configuration = host.Services.GetRequiredService<IConfiguration>();
+
+bool isProduction = configuration.GetValue<bool>("isProduction");
+string serverID = configuration.GetValue<string>("serverID");
 
 logger.LogInformation("========================================");
 logger.LogInformation("Mirror server data sync WebJob starting");
+logger.LogInformation("Environment: {Environment}", environment.EnvironmentName);
+logger.LogInformation("Production: {IsProduction}", isProduction);
+logger.LogInformation("ServerID: {serverID}", serverID);
 logger.LogInformation("Start Time: {Time}", DateTime.Now);
 logger.LogInformation("========================================");
 
