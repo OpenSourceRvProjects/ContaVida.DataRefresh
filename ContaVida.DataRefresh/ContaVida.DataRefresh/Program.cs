@@ -7,6 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+
+var stopWatchTimer = new Stopwatch();
+stopWatchTimer.Start();
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
@@ -37,8 +41,8 @@ bool isProduction = configuration.GetValue<bool>("isProduction");
 string serverID = configuration.GetValue<string>("serverID");
 
 logger.LogInformation("========================================");
-logger.LogInformation("Mirror server data sync WebJob starting");
-logger.LogInformation("Environment: {Environment}", environment.EnvironmentName);
+logger.LogInformation("Data refresh for Mirror environment WebJob starting");
+logger.LogInformation("Source Environment: {Environment}", environment.EnvironmentName);
 logger.LogInformation("Production: {IsProduction}", isProduction);
 logger.LogInformation("ServerID: {serverID}", serverID);
 logger.LogInformation("Start Time: {Time}", DateTime.Now);
@@ -61,4 +65,6 @@ catch (Exception ex)
 finally
 {
     logger.LogInformation("Mirror WebJob finished. End Time: {Time}", DateTime.Now);
+    stopWatchTimer.Stop();
+    logger.LogInformation("Total Execution Time: {Time} seconds", stopWatchTimer.Elapsed.TotalSeconds);
 }
